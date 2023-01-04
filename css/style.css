@@ -1,5 +1,12 @@
 @import url("photographer.css");
 
+:root {
+    --dark-burgundy: #901C1C;
+    --dark-orange: #D3573C;
+    --light-gray: #FAFAFA;
+    --dark-gray: #525252;
+}
+
 body {
     font-family: "DM Sans", sans-serif;
     margin: 0;
