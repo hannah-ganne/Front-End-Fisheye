@@ -1,17 +1,30 @@
-function mediaFactory(data) {
-    const { id, photographerId, title, image, video, likes, date, price } = data;
+class mediaFactory {
+    constructor(data) {
+        this.data = data
+        this.id = data.id
+        this.photographerId = data.photographerId
+        this.title = data.title
+        this.image = data.image
+        this.video = data.video
+        this.likes = data.likes
+        this.date = data.date
+        this.price = data.price
+    }
 
-    function createMediaCard() {
+    createMediaCard() {
         const article = document.createElement('article');
 
         const MediaWithImage = `
             <a href="#">
-                <img src="assets/Sample/${photographerId}/${image}" alt=${title} />
+                <img src="assets/Sample/${this.photographerId}/${this.image}" alt=${this.title} />
             </a>
             <section class="media-info">
-                <span>${title}</span>
+                <span>${this.title}</span>
                 <div class="like">
-                    <span aria-label="like-count">${likes}</span>
+                    <div class="like-count" aria-label="like-count">
+                    ${this.likes}
+                    <img src="assets/icons/heart.svg" alt="heart icon" class="heart-icon" />
+                    </div>
                 </div>
             </section>
         `;
@@ -19,19 +32,22 @@ function mediaFactory(data) {
         const MediaWithVideo = `
             <a>
                 <video controls width="350">
-                    <source src="assets/Sample/${photographerId}/${video}"
+                    <source src="assets/Sample/${this.photographerId}/${this.video}"
                             type="video/mp4">
                 </video>            
             </a>
             <section class="media-info">
-                <span>${title}</span>
+                <span>${this.title}</span>
                 <div class="like">
-                    <span aria-label="like-count">${likes}</span>
+                    <div class="like-count" aria-label="like-count">
+                    ${this.likes}
+                    <img src="assets/icons/heart.svg" alt="heart icon" class="heart-icon" />
+                    </div>
                 </div>
             </section>
         `
 
-        if (data.hasOwnProperty('video')) {
+        if (this.data.hasOwnProperty('video')) {
             article.innerHTML = MediaWithVideo;
         } else {
             article.innerHTML = MediaWithImage;
@@ -39,6 +55,4 @@ function mediaFactory(data) {
 
         return (article);
     }
-
-    return { createMediaCard }
 }

@@ -1,19 +1,27 @@
-function photographerFactory(data) {
-    const { name, id, city, country, tagline, price, portrait } = data;
+class photographerFactory {
+    constructor(data) {
+        this.name = data.name
+        this.id = data.id
+        this.city = data.city
+        this.country = data.country
+        this.tagline = data.tagline
+        this.price = data.price
+        this.portrait = data.portrait
 
-    const picture = `assets/photographers/${portrait}`;
+        this.picture = `assets/photographers/${this.portrait}`
+    }
 
-    function getUserCardDOM() {
+    getUserCardDOM() {
         const article = document.createElement('article');
 
         const AllPhotographers = `
-            <a href="./photographer.html?id=${id}">
-                <img src=${picture} alt='photo of ${name}' />
-                <h2>${name}</h2>
+            <a href="./photographer.html?id=${this.id}">
+                <img src=${this.picture} alt='photo of ${this.name}' />
+                <h2>${this.name}</h2>
             </a>
-            <h3>${city}, ${country}</h3>
-            <p>${tagline}</p>
-            <span>${price}€/jour</span>
+            <h3>${this.city}, ${this.country}</h3>
+            <p>${this.tagline}</p>
+            <span>${this.price}€/jour</span>
         `;
 
         article.innerHTML = AllPhotographers;
@@ -21,22 +29,21 @@ function photographerFactory(data) {
         return (article);
     }
 
-    function createPhotographerCard() {
+    createPhotographerCard() {
         const header = document.querySelector('.photograph-header');
 
         const Photographer = `
             <section class="photograph-info">
-                <h1>${name}</h1>
-                <h3>${city}, ${country}</h3>
-                <p>${tagline}</p>
+                <h1>${this.name}</h1>
+                <h3>${this.city}, ${this.country}</h3>
+                <p>${this.tagline}</p>
             </section>
             <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-            <img src=${picture} alt='photo of ${name}' />
+            <img src=${this.picture} alt='photo of ${this.name}' />
         `
         header.innerHTML = Photographer
 
         return header
     }
 
-    return { name, picture, getUserCardDOM, createPhotographerCard }
 }
