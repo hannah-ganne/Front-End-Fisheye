@@ -99,20 +99,33 @@
     border-radius: 5px 5px 0 0;
 }
 
+.modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(196, 196, 196, 0.4);
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contact-modal {
+    width: 35%;
+    display: none;
+}
+
 .modal {
+
     border-radius: 5px;
     background-color: #DB8876;
-    width: 45%;
-    max-height: 90vh;
-    position: fixed;
-    top: 50px;
-    left: 25%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     padding: 35px;
-    margin: auto;
     mix-blend-mode: normal;
     filter: drop-shadow(-5px 10px 30px rgba(0, 0, 0, 0.25));
     overflow: scroll;
@@ -129,6 +142,7 @@
 
 .modal header h1 {
     font-size: 48px;
+    margin: 0;
     font-weight: normal;
     text-align: center;
     color: black;
@@ -163,4 +177,36 @@ form input {
 
 form input:last-of-type {
     height: 170px;
+}
+
+#lightbox-modal {
+    position: relative;
+    display: none;
+}
+
+#close-lightbox {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.lightbox {
+    margin: auto;
+    max-width: 80vw;
+    max-height: 80vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lightbox .lightbox-media {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+.lightbox .lightbox-media img,
+.lightbox .lightbox-media video {
+    max-height: 80vh;
 }
