@@ -1,10 +1,12 @@
-function displayModal() {
+function openModal() {
     const body = document.getElementById("body");
     const main = document.getElementById("main");
-    const modal = document.getElementById("contact_modal");
-    const closeBtn = document.getElementById("closeBtn");
+    const modal = document.getElementById("contact-modal");
+    const closeBtn = document.getElementById("close-modal");
+    const modalWrapper = document.querySelector(".modal-wrapper");
 
     modal.style.display = "block";
+    modalWrapper.style.visibility = "visible"
     body.classList.add('no-scroll');
     closeBtn.focus();
     main.setAttribute('aria-hidden', 'true');
@@ -14,8 +16,12 @@ function displayModal() {
 function closeModal() {
     const body = document.getElementById("body");
     const main = document.getElementById("main");
-    const modal = document.getElementById("contact_modal");
+    const modal = document.getElementById("contact-modal");
+    const modalWrapper = document.querySelector(".modal-wrapper");
+
+
     modal.style.display = "none";
+    modalWrapper.style.visibility = "hidden"
     body.classList.remove('no-scroll');
     main.setAttribute('aria-hidden', 'false');
     modal.setAttribute('aria-hidden', 'true');
@@ -40,7 +46,7 @@ function sendForm() {
     closeModal();
 }
 
-const modal = document.getElementById("contact_modal");
+const modal = document.getElementById("contact-modal");
 modal.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
         closeModal()
