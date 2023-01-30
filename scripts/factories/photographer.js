@@ -31,17 +31,20 @@ class photographerFactory {
 
     createPhotographerCard() {
         const header = document.querySelector('.photograph-header');
+        const modalTitle = document.getElementById('modal-title');
 
         const Photographer = `
             <section class="photograph-info">
-                <h1>${this.name}</h1>
+                <h2>${this.name}</h2>
                 <h3>${this.city}, ${this.country}</h3>
                 <p>${this.tagline}</p>
             </section>
-            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+            <button class="contact_button" onclick="openModal()">Contactez-moi</button>
             <img src=${this.picture} alt='photo of ${this.name}' />
         `
         header.innerHTML = Photographer
+        modalTitle.innerText = `Contactez-moi
+            ${this.name}`
 
         return header
     }
