@@ -38,9 +38,9 @@ async function displayPhotographerCard(photographer) {
 async function displayMediaCards(media) {
     const mediaSection = document.querySelector(".media-section")
 
-    media.map(item => {
+    media.map((item, index) => {
         const mediaModel = new mediaFactory(item);
-        const mediaCard = mediaModel.createMediaCard();
+        const mediaCard = mediaModel.createMediaCard(index);
         mediaSection.appendChild(mediaCard);
     });
 }
@@ -53,7 +53,7 @@ async function displayPriceBanner(photographer, media) {
     const totalLikeCount = likes.reduce((a, b) => a + b, 0)
 
     const priceBanner = `
-        <span>${totalLikeCount} <img src="assets/icons/black-heart.svg" alt="heart icon" class="heart-icon" /></span>
+        <div><span id="total-likes">${totalLikeCount}</span><img src="assets/icons/black-heart.svg" alt="heart icon" class="heart-icon" /></div>
         <span>${photographerPrice}€ / jour</span>
     `
     const div = document.createElement("div");
@@ -62,7 +62,16 @@ async function displayPriceBanner(photographer, media) {
 
     div.innerHTML = priceBanner;
     main.appendChild(div);
+}
 
+async function displayLightboxMedia(media) {
+    const lightboxMedia = document.querySelector(".lightbox-media");
+
+    media.map((item, index) => {
+        const mediaModel = new mediaFactory(item);
+        const lightbox = mediaModel.createLightbox(index);
+        lightboxMedia.appendChild(lightbox);
+    })
 }
 
 async function init() {
@@ -73,7 +82,7 @@ async function init() {
     displayPhotographerCard(photographer);
     displayMediaCards(media);
     displayPriceBanner(photographer, media);
+    displayLightboxMedia(media);
 };
 
 init();
-
