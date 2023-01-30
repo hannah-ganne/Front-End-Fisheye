@@ -11,37 +11,64 @@ class mediaFactory {
         this.price = data.price
     }
 
-    createMediaCard() {
+    createMediaCard(index) {
         const article = document.createElement('article');
 
         const MediaWithImage = `
-            <a href="#">
-                <img src="assets/Sample/${this.photographerId}/${this.image}" alt=${this.title} />
-            </a>
+            <img
+                src="assets/Sample/${this.photographerId}/${this.image}" 
+                alt="${this.title}" 
+                data-title="${this.title}"
+                data-index=${index}
+                tabindex="0"
+                class="card-media"
+                onclick="openLightbox(${index})"
+            />
             <section class="media-info">
                 <span>${this.title}</span>
                 <div class="like">
-                    <div class="like-count" aria-label="like-count">
-                    ${this.likes}
-                    <img src="assets/icons/heart.svg" alt="heart icon" class="heart-icon" />
+                    <div>
+                        <span class="like-count" aria-label="like-count" data-index=${index}>
+                            ${this.likes}
+                        </span>
+                        <img 
+                            src="assets/icons/heart-line.svg" 
+                            alt="empty heart icon" 
+                            class="heart-icon" 
+                            data-liked="false"
+                            onclick="likeMedia(event, ${index})"
+                        />
                     </div>
                 </div>
             </section>
         `;
 
         const MediaWithVideo = `
-            <a>
-                <video controls width="350">
-                    <source src="assets/Sample/${this.photographerId}/${this.video}"
-                            type="video/mp4">
-                </video>            
-            </a>
+            <video 
+                width="350"
+                alt="${this.title}" 
+                data-title="${this.title}"
+                data-index=${index}
+                class="card-media"
+                onclick="openLightbox(${index})"
+            >
+                <source src="assets/Sample/${this.photographerId}/${this.video}"
+                        type="video/mp4">
+            </video>            
             <section class="media-info">
                 <span>${this.title}</span>
                 <div class="like">
                     <div class="like-count" aria-label="like-count">
-                    ${this.likes}
-                    <img src="assets/icons/heart.svg" alt="heart icon" class="heart-icon" />
+                    <span class="like-count" aria-label="like-count" data-index=${index}>
+                        ${this.likes}
+                    </span>
+                    <img 
+                        src="assets/icons/heart-line.svg" 
+                        alt="empty heart icon" 
+                        class="heart-icon" 
+                        data-liked="false"
+                        onclick="likeMedia(event, ${index})"
+                    />
                     </div>
                 </div>
             </section>
@@ -54,5 +81,33 @@ class mediaFactory {
         }
 
         return (article);
+    }
+
+    createLightbox(index) {
+        const li = document.createElement('li');
+
+        const lightboxWithImage = `
+            <img
+                class="media"
+                src="assets/Sample/${this.photographerId}/${this.image}" 
+                alt="${this.title}" 
+                data-index=${index}    
+            />
+        `
+
+        const lightboxWithVideo = `
+            <video controls class="media" data-index=${index} alt="${this.title}">
+                <source src="assets/Sample/${this.photographerId}/${this.video}"
+                        type="video/mp4">
+            </video>  
+        `
+
+        if (this.data.hasOwnProperty('video')) {
+            li.innerHTML = lightboxWithVideo;
+        } else {
+            li.innerHTML = lightboxWithImage;
+        }
+
+        return (li);
     }
 }
