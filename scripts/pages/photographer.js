@@ -74,15 +74,40 @@ async function displayLightboxMedia(media) {
     })
 }
 
+const allMedia = await getMedia();
+
+async function likeMedia(event, index) {
+    const likeCount = document.querySelector(`.like-count[data-index="${index}"]`);
+    // const media = await getMedia();
+    const isLiked = event.target.getAttribute('data-liked');
+
+    if (isLiked == "false") {
+        allMedia[index].likes += 1;
+        event.target.setAttribute('data-liked', "true");
+        likeCount.textContent = allMedia[index].likes;
+        event.target.setAttribute('src', 'assets/icons/heart.svg')
+    }
+    updateTotalLikes(allMedia)
+}
+
+function updateTotalLikes(media) {
+    const totalLikesEl = document.getElementById('total-likes');
+
+    const likes = media.map(m => m.likes)
+    const totalLikeCount = likes.reduce((a, b) => a + b, 0)
+
+    totalLikesEl.textContent = totalLikeCount;
+}
+
 async function init() {
     // Récupère les datas des photographes
     const photographerId = getPhotographerId();
     const photographer = await getPhotographer(photographerId);
-    const media = await getMedia();
+    // const media = await getMedia();
     displayPhotographerCard(photographer);
-    displayMediaCards(media);
-    displayPriceBanner(photographer, media);
-    displayLightboxMedia(media);
+    displayMediaCards(allMedia);
+    displayPriceBanner(photographer, allMedia);
+    displayLightboxMedia(allMedia);
 };
 
 init();
