@@ -46,18 +46,108 @@
     cursor: pointer;
 }
 
+.dropdown {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: 20px 100px 0px 100px;
+    width: fit-content;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.dropdown .dropdown-toggle {
+    appearance: none;
+    margin-left: 20px;
+    background: var(--dark-burgundy);
+    color: #fff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    border: 0;
+    padding: 15px 23px;
+    border-radius: 5px;
+    text-align: left;
+    position: relative;
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+}
+
+.dropdown .dropdown-toggle::after {
+    content: '';
+    border-width: 6px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: inherit;
+    position: absolute;
+    right: 12px;
+    top: calc(50% + 3px);
+    transform: translateY(-50%);
+}
+
+.dropdown .dropdown-toggle.active::after {
+    border-color: transparent;
+    border-bottom-color: inherit;
+    top: calc(50% - 3px);
+}
+
+.dropdown .dropdown-menu {
+    position: absolute;
+    left: 174px;
+    top: 0;
+    transform: translateX(-50%);
+    background: var(--dark-burgundy);
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 1px 4px rgba(150, 150, 150, 0.65);
+    list-style: none;
+    padding: 0 8px;
+    margin: 0;
+    width: 170px;
+    border-radius: 5px;
+    z-index: 10;
+    visibility: hidden;
+    overflow: auto;
+}
+
+.dropdown .dropdown-menu[aria-expanded="true"] {
+    visibility: visible;
+}
+
+.dropdown .dropdown-menu>li {
+    display: block;
+    align-items: center;
+    padding: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-bottom: 1px solid white;
+}
+
+.dropdown .dropdown-menu>li:last-of-type {
+    border-bottom: none;
+}
+
 .media-section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 70px;
-    margin: 100px;
+    margin: 50px 100px;
 }
 
 .media-section article {
     width: 350px;
 }
 
-.media-section article img:not(.heart-icon) {
+.media-section article img:not(.heart-icon),
+.media-section article video {
     object-fit: cover;
     width: 100%;
     height: 300px;
@@ -219,5 +309,11 @@ form textarea {
 .lightbox .lightbox-media .media {
     margin: 0 20px;
     max-height: 80vh;
+    display: none;
+}
+
+.media-title {
+    color: var(--dark-burgundy);
+    margin: 10px 0 10px 25px;
     display: none;
 }
