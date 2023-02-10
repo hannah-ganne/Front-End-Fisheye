@@ -19,12 +19,11 @@ class mediaFactory {
                 src="assets/Sample/${this.photographerId}/${this.image}" 
                 alt="${this.title}" 
                 data-title="${this.title}"
-                data-index=${index}
+                data-index="${index}"
                 tabindex="0"
                 class="card-media"
-                onclick="openLightbox(${index})"
             />
-            <section class="media-info">
+            <section class="media-info" tabindex="0">
                 <span>${this.title}</span>
                 <div class="like">
                     <div>
@@ -48,14 +47,15 @@ class mediaFactory {
                 width="350"
                 alt="${this.title}" 
                 data-title="${this.title}"
-                data-index=${index}
+                data-index="${index}"
+                tabindex="0"
+
                 class="card-media"
-                onclick="openLightbox(${index})"
             >
                 <source src="assets/Sample/${this.photographerId}/${this.video}"
                         type="video/mp4">
             </video>            
-            <section class="media-info">
+            <section class="media-info" tabindex="0">
                 <span>${this.title}</span>
                 <div class="like">
                     <div class="like-count" aria-label="like-count">
@@ -93,13 +93,15 @@ class mediaFactory {
                 alt="${this.title}" 
                 data-index=${index}    
             />
+            <p class="media-title" aria-label="media title" data-index=${index}>${this.title}</p>
         `
 
         const lightboxWithVideo = `
             <video controls class="media" data-index=${index} alt="${this.title}">
                 <source src="assets/Sample/${this.photographerId}/${this.video}"
                         type="video/mp4">
-            </video>  
+            </video>
+            <p class="media-title" aria-label="media title" data-index=${index}>${this.title}</p>
         `
 
         if (this.data.hasOwnProperty('video')) {
