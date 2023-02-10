@@ -35,6 +35,16 @@ async function displayPhotographerCard(photographer) {
     photographerModel.createPhotographerCard();
 };
 
+async function displayLightboxMedia(media) {
+    const lightboxMedia = document.querySelector(".lightbox-media");
+    lightboxMedia.innerHTML = ''
+    media.map((item, index) => {
+        const mediaModel = new mediaFactory(item);
+        const lightbox = mediaModel.createLightbox(index);
+        lightboxMedia.appendChild(lightbox);
+    })
+}
+
 async function displayMediaCards(media) {
     const mediaSection = document.querySelector(".media-section")
 
@@ -42,7 +52,19 @@ async function displayMediaCards(media) {
         const mediaModel = new mediaFactory(item);
         const mediaCard = mediaModel.createMediaCard(index);
         mediaSection.appendChild(mediaCard);
+
+        const cardMedia = document.querySelector(`.card-media[data-index="${index}"]`);
+        cardMedia.addEventListener('click', () => {
+            openLightbox(index)
+        })
+        cardMedia.addEventListener('keydown', (event) => {
+            if (event.code === 'Enter') {
+                openLightbox(index)
+            }
+        })
     });
+
+    displayLightboxMedia(media);
 }
 
 async function displayPriceBanner(photographer, media) {
@@ -64,50 +86,87 @@ async function displayPriceBanner(photographer, media) {
     main.appendChild(div);
 }
 
-async function displayLightboxMedia(media) {
-    const lightboxMedia = document.querySelector(".lightbox-media");
-
-    media.map((item, index) => {
-        const mediaModel = new mediaFactory(item);
-        const lightbox = mediaModel.createLightbox(index);
-        lightboxMedia.appendChild(lightbox);
-    })
-}
-
-const allMedia = await getMedia();
-
 async function likeMedia(event, index) {
     const likeCount = document.querySelector(`.like-count[data-index="${index}"]`);
-    // const media = await getMedia();
+    const media = await getMedia();
     const isLiked = event.target.getAttribute('data-liked');
 
     if (isLiked == "false") {
-        allMedia[index].likes += 1;
+        media[index].likes += 1;
         event.target.setAttribute('data-liked', "true");
-        likeCount.textContent = allMedia[index].likes;
+        likeCount.textContent = media[index].likes;
         event.target.setAttribute('src', 'assets/icons/heart.svg')
+        updateTotalLikes()
     }
-    updateTotalLikes(allMedia)
 }
 
-function updateTotalLikes(media) {
-    const totalLikesEl = document.getElementById('total-likes');
+function updateTotalLikes() {
+    const totalLikes = document.getElementById('total-likes');
+    let like = parseInt(totalLikes.innerHTML) + 1;
+    totalLikes.innerHTML = like;
+}
 
-    const likes = media.map(m => m.likes)
-    const totalLikeCount = likes.reduce((a, b) => a + b, 0)
+async function sortMedia(value) {
+    const media = await getMedia();
 
-    totalLikesEl.textContent = totalLikeCount;
+    media.sort((a, b) => {
+        switch (value) {
+            case 'Date':
+                if (a.date > b.date) {
+                    return 1
+                } else {
+                    return -1
+                }
+                break;
+            case 'Titre':
+                if (a.title > b.title) {
+                    return 1
+                } else {
+                    return -1
+                }
+                break;
+            case 'Popularité':
+                if (a.likes > b.likes) {
+                    return -1
+                } else {
+                    return 1
+                }
+                break;
+        }
+    })
+    const mediaSection = document.querySelector(".media-section")
+    mediaSection.innerHTML = '';
+    displayMediaCards(media)
+}
+
+function handleKeyDown(e) {
+    const keyboardfocusableElements = document.querySelectorAll(
+        'a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
+    )
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const activeEl = [...keyboardfocusableElements].find(el => el === document.activeElement);
+        let indexOfActiveEl = [...keyboardfocusableElements].indexOf(activeEl);
+
+        e.key === 'ArrowRight'
+            ? keyboardfocusableElements[indexOfActiveEl + 1].focus()
+            : keyboardfocusableElements[indexOfActiveEl - 1].focus()
+    }
 }
 
 async function init() {
     // Récupère les datas des photographes
     const photographerId = getPhotographerId();
     const photographer = await getPhotographer(photographerId);
-    // const media = await getMedia();
+    const media = await getMedia();
     displayPhotographerCard(photographer);
-    displayMediaCards(allMedia);
-    displayPriceBanner(photographer, allMedia);
-    displayLightboxMedia(allMedia);
+    displayMediaCards(media);
+    displayPriceBanner(photographer, media);
+
+    const main = document.getElementById('main');
+    main.addEventListener('keydown', handleKeyDown);
 };
 
 init();
+
