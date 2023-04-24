@@ -13,6 +13,7 @@ class mediaFactory {
 
     createMediaCard(index) {
         const article = document.createElement('article');
+        article.className = 'media-article';
 
         const MediaWithImage = `
             <img
