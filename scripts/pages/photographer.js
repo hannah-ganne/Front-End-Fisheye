@@ -1,5 +1,3 @@
-//Mettre le code JavaScript lié à la page photographer.html
-
 function getPhotographerId() {
     let str = window.location.href;
     let url = new URL(str);
@@ -88,13 +86,12 @@ async function displayPriceBanner(photographer, media) {
 
 async function likeMedia(event, index) {
     const likeCount = document.querySelector(`.like-count[data-index="${index}"]`);
-    const media = await getMedia();
     const isLiked = event.target.getAttribute('data-liked');
+    console.log(+likeCount.innerText + 1);
 
     if (isLiked == "false") {
-        media[index].likes += 1;
+        likeCount.innerText = +likeCount.innerText + 1;
         event.target.setAttribute('data-liked', "true");
-        likeCount.textContent = media[index].likes;
         event.target.setAttribute('src', 'assets/icons/heart.svg')
         updateTotalLikes()
     }
@@ -167,6 +164,20 @@ async function init() {
     const main = document.getElementById('main');
     main.addEventListener('keydown', handleKeyDown);
 };
+
+const dropdownListItems = document.querySelectorAll('.dropdown-list');
+dropdownListItems.forEach(item => {
+    item.addEventListener('click', () => {
+        sortMedia(item.dataset.value)
+    });
+})
+dropdownListItems.forEach(item => {
+    item.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13) {
+            sortMedia(item.dataset.value);
+        }
+    });
+});
 
 init();
 
