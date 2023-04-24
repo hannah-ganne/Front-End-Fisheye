@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
   <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -23,9 +23,10 @@
         Popularité
       </button>
       <ul class="dropdown-menu" role="listbox" aria-expanded="false">
-        <li role="option" onclick="sortMedia('Popularité')" tabindex="0" data-value="Popularité">Popularité</li>
-        <li role="option" onclick="sortMedia('Date')" tabindex="0" data-value="Date">Date</li>
-        <li role="option" onclick="sortMedia('Titre')" tabindex="0" data-value="Titre">Titre</li>
+        <li class="dropdown-list" role="option" tabindex="0" data-value="Popularité">
+          Popularité</li>
+        <li class="dropdown-list" role="option" tabindex="0" data-value="Date">Date</li>
+        <li class="dropdown-list" role="option" tabindex="0" data-value="Titre">Titre</li>
       </ul>
     </div>
     <section class="media-section"></section>
@@ -35,7 +36,7 @@
       <div class="modal">
         <header>
           <h1 id="modal-title">Contactez-moi</h1>
-          <img src="assets/icons/close.svg" id="close-modal" tabindex=0 onclick="closeModal()" />
+          <img src="assets/icons/close.svg" id="close-modal" tabindex=0 onclick="closeModal()" alt="close button" />
         </header>
         <form id="form">
           <div>
