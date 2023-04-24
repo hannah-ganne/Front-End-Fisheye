@@ -2,7 +2,7 @@ let currentIndex;
 const nextBtn = document.getElementById('next-lightbox');
 const previousBtn = document.getElementById('previous-lightbox');
 const lightboxModal = document.getElementById('lightbox-modal');
-
+const closeBtn = document.getElementById("close-lightbox");
 function openLightbox(index) {
     const main = document.getElementById("main");
     const lightbox = document.getElementById("lightbox-modal");
@@ -73,18 +73,13 @@ function goToPrevious() {
 
 nextBtn.addEventListener('click', goToNext);
 previousBtn.addEventListener('click', goToPrevious);
-lightboxModal.addEventListener('keydown', (event) => {
-    if (event.code === 'ArrowRight') {
-        goToNext()
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+        previousBtn.click();
+    } else if (e.key === "ArrowRight") {
+        nextBtn.click();
+    } else if (e.key === "Escape") {
+        closeBtn.click();
     }
-})
-lightboxModal.addEventListener('keydown', (event) => {
-    if (event.code === 'ArrowLeft') {
-        goToPrevious()
-    }
-})
-lightboxModal.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape') {
-        closeLightbox()
-    }
-})
+});
