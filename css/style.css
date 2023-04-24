@@ -11,6 +11,14 @@ html {
     box-sizing: border-box;
 }
 
+*:focus {
+    outline: 2px solid #D3573C;
+}
+
+.dropdown .dropdown-toggle:focus {
+    outline: 2px solid #D3573C;
+}
+
 *,
 *::before,
 *::after {
