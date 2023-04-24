@@ -141,14 +141,16 @@ function handleKeyDown(e) {
         'a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
     )
 
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const activeEl = [...keyboardfocusableElements].find(el => el === document.activeElement);
-        let indexOfActiveEl = [...keyboardfocusableElements].indexOf(activeEl);
+    if (!document.body.classList.contains('modal-open')) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const activeEl = [...keyboardfocusableElements].find(el => el === document.activeElement);
+            let indexOfActiveEl = [...keyboardfocusableElements].indexOf(activeEl);
 
-        e.key === 'ArrowRight'
-            ? keyboardfocusableElements[indexOfActiveEl + 1].focus()
-            : keyboardfocusableElements[indexOfActiveEl - 1].focus()
+            e.key === 'ArrowRight'
+                ? keyboardfocusableElements[indexOfActiveEl + 1].focus()
+                : keyboardfocusableElements[indexOfActiveEl - 1].focus()
+        }
     }
 }
 
@@ -173,8 +175,10 @@ dropdownListItems.forEach(item => {
 })
 dropdownListItems.forEach(item => {
     item.addEventListener('keydown', (event) => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
             sortMedia(item.dataset.value);
+            setValue(item.dataset.value);
+            toggle();
         }
     });
 });
