@@ -3,6 +3,7 @@ const nextBtn = document.getElementById('next-lightbox');
 const previousBtn = document.getElementById('previous-lightbox');
 const lightboxModal = document.getElementById('lightbox-modal');
 const closeBtn = document.getElementById("close-lightbox");
+
 function openLightbox(index) {
     const main = document.getElementById("main");
     const lightbox = document.getElementById("lightbox-modal");
@@ -12,6 +13,7 @@ function openLightbox(index) {
     const mediaTitle = document.querySelector(`.media-title[data-index="${index}"]`)
 
     currentIndex = index;
+    document.body.classList.add('modal-open');
     lightbox.style.display = "block";
     modalWrapper.style.visibility = "visible"
     closeBtn.focus();
@@ -28,7 +30,7 @@ function closeLightbox() {
     const media = document.querySelectorAll(".media");
     const mediaTitle = document.querySelectorAll(".media-title");
 
-
+    document.body.classList.remove('modal-open');
     lightbox.style.display = "none";
     modalWrapper.style.visibility = "hidden"
     main.setAttribute('aria-hidden', 'false');
@@ -83,3 +85,23 @@ window.addEventListener("keydown", (e) => {
         closeBtn.click();
     }
 });
+
+document.body.addEventListener('touchmove', (event) => {
+    if (document.body.classList.contains('modal-open')) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+document.body.addEventListener('wheel', (event) => {
+    if (document.body.classList.contains('modal-open')) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+document.body.addEventListener('keydown', (event) => {
+    if (document.body.classList.contains('modal-open')) {
+        if (event.key === "Tab" || event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+        }
+    }
+}, { passive: false });
