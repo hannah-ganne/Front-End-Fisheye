@@ -87,7 +87,6 @@ async function displayPriceBanner(photographer, media) {
 async function likeMedia(event, index) {
     const likeCount = document.querySelector(`.like-count[data-index="${index}"]`);
     const isLiked = event.target.getAttribute('data-liked');
-    console.log(+likeCount.innerText + 1);
 
     if (isLiked == "false") {
         likeCount.innerText = +likeCount.innerText + 1;
