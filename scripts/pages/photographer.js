@@ -1,31 +1,34 @@
 function getPhotographerId() {
-    let str = window.location.href;
-    let url = new URL(str);
-    let photographerId = url.searchParams.get('id')
+    const str = window.location.href;
+    const url = new URL(str);
+    const photographerId = url.searchParams.get('id')
 
     return photographerId
 }
 
 async function getPhotographer(id) {
-
-    let photographer = await fetch('/data/photographers.json')
-        .then(res => res.json())
-        .then(data => data.photographers.filter(p => p.id === parseInt(id)))
-        .catch(error => console.log(error))
-
-    return photographer
+    try {
+    const res = await fetch('/data/photographers.json');
+    const data = await res.json();
+    const photographer = data.photographers.filter(p => p.id === parseInt(id));
+    return photographer;
+    } catch (error) {
+    console.log(error);
+    return null;
+    }
 }
 
 async function getMedia() {
-
-    const photographerId = getPhotographerId();
-
-    let media = await fetch('/data/photographers.json')
-        .then(res => res.json())
-        .then(data => data.media.filter(m => m.photographerId === parseInt(photographerId)))
-        .catch(error => console.log(error))
-
-    return [...media]
+    try {
+        const photographerId = getPhotographerId();
+        const res = await fetch('/data/photographers.json');
+        const data = await res.json();
+        const media = data.media.filter(m => m.photographerId === parseInt(photographerId));
+        return [...media];
+    } catch (error) {
+    console.log(error);
+    return null;
+    }
 }
 
 async function displayPhotographerCard(photographer) {
@@ -84,22 +87,22 @@ async function displayPriceBanner(photographer, media) {
     main.appendChild(div);
 }
 
+function updateTotalLikes() {
+    const totalLikes = document.getElementById('total-likes');
+    const like = parseInt(totalLikes.innerHTML) + 1;
+    totalLikes.innerHTML = like;
+}
+
 async function likeMedia(event, index) {
     const likeCount = document.querySelector(`.like-count[data-index="${index}"]`);
     const isLiked = event.target.getAttribute('data-liked');
 
-    if (isLiked == "false") {
+    if (isLiked === "false") {
         likeCount.innerText = +likeCount.innerText + 1;
         event.target.setAttribute('data-liked', "true");
         event.target.setAttribute('src', 'assets/icons/heart.svg')
         updateTotalLikes()
     }
-}
-
-function updateTotalLikes() {
-    const totalLikes = document.getElementById('total-likes');
-    let like = parseInt(totalLikes.innerHTML) + 1;
-    totalLikes.innerHTML = like;
 }
 
 async function sortMedia(value) {
@@ -110,23 +113,23 @@ async function sortMedia(value) {
             case 'Date':
                 if (a.date > b.date) {
                     return 1
-                } else {
+                } 
                     return -1
-                }
+                
                 break;
             case 'Titre':
                 if (a.title > b.title) {
                     return 1
-                } else {
+                } 
                     return -1
-                }
+                
                 break;
             case 'Popularité':
                 if (a.likes > b.likes) {
                     return -1
-                } else {
+                } 
                     return 1
-                }
+                
                 break;
         }
     })
@@ -144,7 +147,7 @@ function handleKeyDown(e) {
         if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
             e.preventDefault();
             const activeEl = [...keyboardfocusableElements].find(el => el === document.activeElement);
-            let indexOfActiveEl = [...keyboardfocusableElements].indexOf(activeEl);
+            const indexOfActiveEl = [...keyboardfocusableElements].indexOf(activeEl);
 
             e.key === 'ArrowRight'
                 ? keyboardfocusableElements[indexOfActiveEl + 1].focus()
