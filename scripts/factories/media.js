@@ -1,21 +1,21 @@
 class mediaFactory {
-    constructor(data) {
-        this.data = data
-        this.id = data.id
-        this.photographerId = data.photographerId
-        this.title = data.title
-        this.image = data.image
-        this.video = data.video
-        this.likes = data.likes
-        this.date = data.date
-        this.price = data.price
-    }
+  constructor(data) {
+    this.data = data;
+    this.id = data.id;
+    this.photographerId = data.photographerId;
+    this.title = data.title;
+    this.image = data.image;
+    this.video = data.video;
+    this.likes = data.likes;
+    this.date = data.date;
+    this.price = data.price;
+  }
 
-    createMediaCard(index) {
-        const article = document.createElement('article');
-        article.className = 'media-article';
+  createMediaCard(index) {
+    const article = document.createElement('article');
+    article.className = 'media-article';
 
-        const MediaWithImage = `
+    const MediaWithImage = `
             <img
                 src="assets/Sample/${this.photographerId}/${this.image}" 
                 alt="${this.title}" 
@@ -43,7 +43,7 @@ class mediaFactory {
             </section>
         `;
 
-        const MediaWithVideo = `
+    const MediaWithVideo = `
             <video 
                 width="350"
                 alt="${this.title}" 
@@ -73,21 +73,21 @@ class mediaFactory {
                     </div>
                 </div>
             </section>
-        `
+        `;
 
-        if (this.data.hasOwnProperty('video')) {
-            article.innerHTML = MediaWithVideo;
-        } else {
-            article.innerHTML = MediaWithImage;
-        }
-
-        return (article);
+    if (this.data.hasOwnProperty('video')) {
+      article.innerHTML = MediaWithVideo;
+    } else {
+      article.innerHTML = MediaWithImage;
     }
 
-    createLightbox(index) {
-        const li = document.createElement('li');
+    return (article);
+  }
 
-        const lightboxWithImage = `
+  createLightbox(index) {
+    const li = document.createElement('li');
+
+    const lightboxWithImage = `
             <img
                 class="media"
                 src="assets/Sample/${this.photographerId}/${this.image}" 
@@ -95,22 +95,22 @@ class mediaFactory {
                 data-index=${index}    
             />
             <p class="media-title" aria-label="media title" data-index=${index}>${this.title}</p>
-        `
+        `;
 
-        const lightboxWithVideo = `
+    const lightboxWithVideo = `
             <video controls class="media" data-index=${index} alt="${this.title}">
                 <source src="assets/Sample/${this.photographerId}/${this.video}"
                         type="video/mp4">
             </video>
             <p class="media-title" aria-label="media title" data-index=${index}>${this.title}</p>
-        `
+        `;
 
-        if (this.data.hasOwnProperty('video')) {
-            li.innerHTML = lightboxWithVideo;
-        } else {
-            li.innerHTML = lightboxWithImage;
-        }
-
-        return (li);
+    if (this.data.hasOwnProperty('video')) {
+      li.innerHTML = lightboxWithVideo;
+    } else {
+      li.innerHTML = lightboxWithImage;
     }
+
+    return (li);
+  }
 }
