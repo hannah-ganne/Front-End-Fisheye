@@ -1,20 +1,20 @@
 class photographerFactory {
-    constructor(data) {
-        this.name = data.name
-        this.id = data.id
-        this.city = data.city
-        this.country = data.country
-        this.tagline = data.tagline
-        this.price = data.price
-        this.portrait = data.portrait
+  constructor(data) {
+    this.name = data.name;
+    this.id = data.id;
+    this.city = data.city;
+    this.country = data.country;
+    this.tagline = data.tagline;
+    this.price = data.price;
+    this.portrait = data.portrait;
 
-        this.picture = `assets/photographers/${this.portrait}`
-    }
+    this.picture = `assets/photographers/${this.portrait}`;
+  }
 
-    getUserCardDOM() {
-        const article = document.createElement('article');
+  getUserCardDOM() {
+    const article = document.createElement('article');
 
-        const AllPhotographers = `
+    const AllPhotographers = `
             <a href="./photographer.html?id=${this.id}">
                 <img src=${this.picture} alt='photo of ${this.name}' />
                 <h2>${this.name}</h2>
@@ -24,16 +24,16 @@ class photographerFactory {
             <span>${this.price}€/jour</span>
         `;
 
-        article.innerHTML = AllPhotographers;
+    article.innerHTML = AllPhotographers;
 
-        return (article);
-    }
+    return (article);
+  }
 
-    createPhotographerCard() {
-        const header = document.querySelector('.photograph-header');
-        const modalTitle = document.getElementById('modal-title');
+  createPhotographerCard() {
+    const header = document.querySelector('.photograph-header');
+    const modalTitle = document.getElementById('modal-title');
 
-        const Photographer = `
+    const Photographer = `
             <section class="photograph-info">
                 <h2>${this.name}</h2>
                 <h3>${this.city}, ${this.country}</h3>
@@ -41,12 +41,11 @@ class photographerFactory {
             </section>
             <button class="contact_button" onclick="openModal()">Contactez-moi</button>
             <img src=${this.picture} alt='photo of ${this.name}' />
-        `
-        header.innerHTML = Photographer
-        modalTitle.innerText = `Contactez-moi
-            ${this.name}`
+        `;
+    header.innerHTML = Photographer;
+    modalTitle.innerText = `Contactez-moi
+            ${this.name}`;
 
-        return header
-    }
-
+    return header;
+  }
 }
